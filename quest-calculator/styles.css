@@ -1,0 +1,28 @@
+.quest-top {
+    background-image: url(quest-img/quest_up_2.png);
+    background-repeat: no-repeat;
+    background-size: auto auto;
+}
+
+.quest-base {
+    background-image: url(quest-img/quest_base_2.png);
+    background-repeat: no-repeat;
+    background-size: auto auto;
+}
+
+.quest-bottom {
+    background-image: url(quest-img/quest_down_2.png);
+    background-repeat: no-repeat;
+    background-size: auto auto;
+}
+
+.quest-assembly {
+    background-image: url(quest-img/quest_down_assembly_2.png);
+    background-repeat: no-repeat;
+    background-size: auto auto;
+}
+
+.whauto {
+    width: auto;
+    height: auto;
+}
