@@ -31,9 +31,9 @@ questCalculator = {
             + '<span>[cm].</span>';
     },
     generateSecondOption: function () {
-        return 'Ściana Questów: liczba rzędów '
+        return '<span>Ściana Questów: liczba rzędów </span>'
             + '<input type="text" name="widthInput" />'
-            + ' x liczba kolumn '
+            + '<span> x liczba kolumn </span>'
             + '<input type="text" name="heightInput" />.'
     },
 }
