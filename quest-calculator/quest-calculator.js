@@ -4,38 +4,63 @@ questCalculator = {
     questHeight: 124,
 
     initialize: function () {
+        this.initializeOptions();
+        this.initializeButtons();
+    },
+    initializeOptions: function () {
         this.selectedOption = $('input[name="calc-option"][checked]').val();
-        this.generateInputDiv(this.selectedOption);
+        this.renderInputWrapper(this.selectedOption);
         $('input[name="calc-option"]').change(function (data) {
-            $target = $(data.target);
+            var $target = $(data.target);
             this.selectedOption = $target.val();
-            questCalculator.generateInputDiv(this.selectedOption);
+            questCalculator.renderInputWrapper(this.selectedOption);
         });
     },
-    generateInputDiv: function (option) {
-        $inputDiv = $('<div>').attr('id', 'inputWrapper');
+    initializeButtons: function () {
+        $('input[type="button"][name="generateButton"]').click(function () {
+           this.generateWall(); 
+        });
+    },
+    renderInputWrapper: function (option) {
+        var $inputDiv = $('<div>').attr('id', 'inputWrapper');
         $('#calc-render').html('')
             .append('<br/>')
             .append($inputDiv);
         if (option == '1') {
-            $('#inputWrapper').append(this.generateFirstOption);        
+            $('#inputWrapper').append(this.renderFirstOption);        
         } else if (option == '2') {
-            $('#inputWrapper').append(this.generateSecondOption);
+            $('#inputWrapper').append(this.renderSecondOption);
         }
     },
-    generateFirstOption: function () {
+    renderFirstOption: function () {
         return '<span>Rozmiar ściany: szerokość </span>'
             + '<input type="text" name="widthInput" />'
             + '<span>[cm] x wysokość </span>'
             + '<input type="text" name="heightInput" />'
-            + '<span>[cm].</span>';
+            + '<span>[cm].</span>'
+            + '<input type="button" name="generateButton" value="Generuj">';
     },
-    generateSecondOption: function () {
+    renderSecondOption: function () {
         return '<span>Ściana Questów: liczba rzędów </span>'
             + '<input type="text" name="widthInput" />'
             + '<span> x liczba kolumn </span>'
             + '<input type="text" name="heightInput" />.'
+            + '<input type="button" name="generateButton" value="Generuj">';
     },
+    generateWall: function () {
+        var width = parseInt($('input[name="widthInput"').val());
+        var height = parseInt($('input[name="heightInput"').val());
+    },
+    generateQuestWall: function (rows, columns) {
+        $('#calc-render').append(generateQuestTable(rows, columns));
+        $('#calc-render').append(questCalculator.generateQuestWallSummary());
+    },
+    generateQuestRectangeFitToWall: function (wallWidth, wallHeight) {
+    },
+    generateQuestWallSummary: function () {
+    },
+    generateQuestRectangleFitToWallSummary: function () {
+    }
 }
 
 $(document).ready(function () {
