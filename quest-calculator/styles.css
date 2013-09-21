@@ -32,6 +32,10 @@ td, tr {
     margin: 0 0 0 0;
 }*/
 
-#table-wrapper {
+#table-wrapper, #summary {
     margin-top: 20px;
+}
+
+#summary {
+    text-align: left;
 }

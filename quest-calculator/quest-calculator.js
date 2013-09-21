@@ -22,6 +22,7 @@ questCalculator = {
     initializeButtons: function () {
         $('input[type="button"][name="generateButton"]').click(function () {
             $('#table-wrapper').empty();
+            $('#summary').empty();
             questCalculator.generateWall(); 
         });
     },
@@ -45,13 +46,14 @@ questCalculator = {
             + '<span>[cm] x wysokość </span>'
             + '<input type="text" name="heightInput" />'
             + '<span>[cm].</span>'
-            + '<input type="button" name="generateButton" value="Generuj" />';
+            + '<input type="button" name="generateButton" value="Generuj" />'
+            + '<p>W budowie.</p>'
     },
     renderSecondOption: function () {
         return '<span>Ściana Questów: liczba rzędów </span>'
             + '<input type="text" name="widthInput" />'
             + '<span> x liczba kolumn </span>'
-            + '<input type="text" name="heightInput" />.'
+            + '<input type="text" name="heightInput" />'
             + '<input type="button" name="generateButton" value="Generuj" />';
     },
     generateWall: function () {
@@ -66,12 +68,20 @@ questCalculator = {
     },
     generateQuestWall: function (rows, columns) {
         $('#table-wrapper').append(generateQuestTable(rows, columns));
-        $('#table-wrapper').append(questCalculator.generateQuestWallSummary());
+        $('#calc-render').append(questCalculator.generateQuestWallSummary(columns, rows));
     },
     generateQuestRectangeFitToWall: function (wallWidth, wallHeight) {
-        alert('W budowie');
+        alert('W budowie.');
     },
-    generateQuestWallSummary: function () {
+    generateQuestWallSummary: function (width, height) {
+        var $summary = $('<div>').attr('id', 'summary');
+        var summaryText = '<span>Podsumowanie:' 
+            + '<br/>Liczba wykorzystanych Questów: ' + width * height
+            + '<br/>Szerokość ściany: ' + width * this.questWidth + 'cm' 
+            + '<br/>Wysokość ściany: ' + height * this.questHeight + 'cm'
+            + '</span>';
+
+        return $summary.append(summaryText);
     },
     generateQuestRectangleFitToWallSummary: function () {
     }
