@@ -1,5 +1,5 @@
 Number.prototype.times = function(fn) {
-    for(var r = [], i = 0; i < tris; i++)
+    for(var r = [], i = 0; i < this; i++)
         r.push(fn(i));
     return r;
 }
@@ -7,56 +7,59 @@ Number.prototype.times = function(fn) {
 function generateQuestTable(numRows, numCols) {
     var topRow = generateTopRow(numCols);
     var assembledRows = generateAssembledRows(numRows, numCols);
+    var baseRow = generateBaseRow(numCols);
     var bottomRow = generateBottomRow(numCols);
 
     return $('<table/>').attr('id', 'quest-table')
         .append(topRow)
         .append(assembledRows)
+        .append(baseRow)
         .append(bottomRow);
 }
 
 function generateAssembledRows(numRows, numCols) {
     if (numRows == 1) {
-        return generateBaseRow(numCols);
+        return;
     }
+
+    numRows = numRows - 1;
 
     var assembledRows = numRows.times(function () {
         return generateBaseRow(numCols)
-            .append(generateAssembleRow(numCols))
-            .append(generateBaseRow(numCols));
+            .add(generateAssemblyRow(numCols));
     });
 
     return assembledRows;
 }
 
 function generateTopRow(numCols) {
-    var topRow = numCols.times(function(c) {
-        return $('<td/>');
-    }).wrap('<tr/>');
+    var topRow = $('<tr/>').append(numCols.times(function(c) {
+        return $('<td/>').append(getTopQuestImage());
+    }));
 
     return topRow;
 }
 
 function generateBaseRow(numCols) {
-    var baseRow = numCols.times(function(c) {
-        return $('<td/>');
-    }).wrap('<tr/>');
+    var baseRow = $('<tr/>').append(numCols.times(function(c) {
+        return $('<td/>').append(getBaseQuestImage());
+    }));
 
     return baseRow;
 }
 
-function generateAssembleRow(numCols) {
-    var assembleRow = numCols.times(function(c) {
-        return $('<td/>');
-    }).wrap('<tr/>');
+function generateAssemblyRow(numCols) {
+    var assemblyRow = $('<tr/>').append(numCols.times(function(c) {
+        return $('<td/>').append(getAssemblyQuestImage());
+    }));
 
-    return assembleRow;
+    return assemblyRow;
 }
 
 function generateBottomRow(numCols) {
-    var bottomRow = numCols.times(function(c) {
-        return $('<td/>');
-    }).wrap('<tr/>');
-
+    var bottomRow = $('<tr/>').append(numCols.times(function(c) {
+        return $('<td/>').append(getBottomQuestImage());
+    }));
+    
     return bottomRow;
 }

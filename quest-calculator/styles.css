@@ -21,8 +21,17 @@
     background-repeat: no-repeat;
     background-size: auto auto;
 }
-
+/*
 .whauto {
     width: auto;
     height: auto;
+}
+
+td, tr {
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+}*/
+
+#table-wrapper {
+    margin-top: 20px;
 }
