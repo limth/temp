@@ -50,9 +50,9 @@ questCalculator = {
             + '<p>W budowie.</p>'
     },
     renderSecondOption: function () {
-        return '<span>Ściana Questów: liczba rzędów </span>'
+        return '<span>Ściana Questów: liczba kolumn </span>'
             + '<input type="text" name="widthInput" />'
-            + '<span> x liczba kolumn </span>'
+            + '<span> x liczba rzędów </span>'
             + '<input type="text" name="heightInput" />'
             + '<input type="button" name="generateButton" value="Generuj" />';
     },
