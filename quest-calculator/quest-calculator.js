@@ -1,7 +1,10 @@
 questCalculator = {
     selectedOption: 0,
-    questWidth: 80,
-    questHeight: 124,
+    QUEST_WIDTH: 80,
+    QUEST_HEIGHT: 124,
+    MAX_WALL_HEIGHT: 500,
+    MAX_WALL_WIDTH: 500,
+    QUEST_IMG_WIDTH: 88,
 
     initialize: function () {
         $('input[name="calc-option"]').first().prop('checked', true);
@@ -65,9 +68,12 @@ questCalculator = {
         } else if (this.selectedOption == '2') {
             this.generateQuestWall(height, width);
         }
+
+        this.adjustWallDimensions(height, width);
     },
     generateQuestWall: function (rows, columns) {
         $('#table-wrapper').append(generateQuestTable(rows, columns));
+        $('#summary').remove();
         $('#calc-render').append(questCalculator.generateQuestWallSummary(columns, rows));
     },
     generateQuestRectangeFitToWall: function (wallWidth, wallHeight) {
@@ -77,14 +83,22 @@ questCalculator = {
         var $summary = $('<div>').attr('id', 'summary');
         var summaryText = '<span>Podsumowanie:' 
             + '<br/>Liczba wykorzystanych Questów: ' + width * height
-            + '<br/>Szerokość ściany: ' + width * this.questWidth + 'cm' 
-            + '<br/>Wysokość ściany: ' + height * this.questHeight + 'cm'
+            + '<br/>Szerokość ściany: ' + width * this.QUEST_WIDTH + 'cm' 
+            + '<br/>Wysokość ściany: ' + height * this.QUEST_HEIGHT + 'cm'
             + '</span>';
 
         return $summary.append(summaryText);
     },
     generateQuestRectangleFitToWallSummary: function () {
-    }
+    },
+    adjustWallDimensions: function (height, width) {
+        var totalWidth = width * this.QUEST_IMG_WIDTH;
+        
+        if (totalWidth > this.MAX_WALL_WIDTH) {
+            var newWidth = this.MAX_WALL_WIDTH / width;
+            $('#table-wrapper img').attr('width', newWidth + 'px');
+        }
+    }                   
 }
 
 $(document).ready(function () {
