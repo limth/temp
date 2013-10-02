@@ -1,21 +1,14 @@
 questCalculator = {
-    selectedOption: 0,
-    QUEST_WIDTH: 80,
-    QUEST_HEIGHT: 124,
-    MAX_WALL_HEIGHT: 500,
-    MAX_WALL_WIDTH: 500,
-    QUEST_IMG_WIDTH: 88,
-
     initialize: function () {
         $('input[name="calc-option"]').first().prop('checked', true);
         this.initializeOptions();
     },
     initializeOptions: function () {
-        this.selectedOption = $('input[name="calc-option"][checked]').val();
+        questOptions.setOption($('input[name="calc-option"][checked]').val());
         this.renderInputWrapper();
         $('input[name="calc-option"]').change(function (data) {
             var $target = $(data.target);
-            questCalculator.selectedOption = $target.val();
+            questOptions.setOption($target.val());
             questCalculator.renderInputWrapper();
             questCalculator.initializeButtons();
         });
@@ -34,71 +27,52 @@ questCalculator = {
         $('#calc-render').empty()
             .append('<br/>')
             .append($inputDiv);
-        if (this.selectedOption == '1') {
-            $('#input-wrapper').append(this.renderFirstOption());        
-        } else if (this.selectedOption == '2') {
-            $('#input-wrapper').append(this.renderSecondOption());
-        }
+        $('#input-wrapper').append(questOptions.current.renderOption());        
 
         var $tableWrapper = $('<div>').attr('id', 'table-wrapper');
         $('#calc-render').append($tableWrapper);
-    },
-    renderFirstOption: function () {
-        return '<span>Rozmiar ściany: szerokość </span>'
-            + '<input type="text" name="widthInput" />'
-            + '<span>[cm] x wysokość </span>'
-            + '<input type="text" name="heightInput" />'
-            + '<span>[cm].</span>'
-            + '<input type="button" name="generateButton" value="Generuj" />'
-            + '<p>W budowie.</p>'
-    },
-    renderSecondOption: function () {
-        return '<span>Ściana Questów: liczba kolumn </span>'
-            + '<input type="text" name="widthInput" />'
-            + '<span> x liczba rzędów </span>'
-            + '<input type="text" name="heightInput" />'
-            + '<input type="button" name="generateButton" value="Generuj" />';
     },
     generateWall: function () {
         var width = parseInt($('input[name="widthInput"]').val());
         var height = parseInt($('input[name="heightInput"]').val());
 
-        if (this.selectedOption == '1') {
-            this.generateQuestRectangeFitToWall(width, height);
-        } else if (this.selectedOption == '2') {
-            this.generateQuestWall(height, width);
-        }
+        questOptions.current.generateWall(height, width);
 
         this.adjustWallDimensions(height, width);
     },
-    generateQuestWall: function (rows, columns) {
-        $('#table-wrapper').append(generateQuestTable(rows, columns));
-        $('#summary').remove();
-        $('#calc-render').append(questCalculator.generateQuestWallSummary(columns, rows));
-    },
-    generateQuestRectangeFitToWall: function (wallWidth, wallHeight) {
-        alert('W budowie.');
-    },
-    generateQuestWallSummary: function (width, height) {
-        var $summary = $('<div>').attr('id', 'summary');
-        var summaryText = '<span>Podsumowanie:' 
-            + '<br/>Liczba wykorzystanych Questów: ' + width * height
-            + '<br/>Szerokość ściany: ' + width * this.QUEST_WIDTH + 'cm' 
-            + '<br/>Wysokość ściany: ' + height * this.QUEST_HEIGHT + 'cm'
-            + '</span>';
-
-        return $summary.append(summaryText);
-    },
-    generateQuestRectangleFitToWallSummary: function () {
-    },
     adjustWallDimensions: function (height, width) {
-        var totalWidth = width * this.QUEST_IMG_WIDTH;
-        
-        if (totalWidth > this.MAX_WALL_WIDTH) {
-            var newWidth = this.MAX_WALL_WIDTH / width;
-            $('#table-wrapper img').attr('width', newWidth + 'px');
+        var totalWidth = width * questConstants.QUEST_IMG_WIDTH;
+        var newWidth = questConstants.QUEST_IMG_WIDTH;
+
+        if (totalWidth > questConstants.MAX_WALL_WIDTH) {
+            newWidth = questConstants.MAX_WALL_WIDTH / width;
         }
-    }                   
+
+        var wallHeight = this.calculateQuestWallHeight(height);
+        if (wallHeight > questConstants.MAX_WALL_HEIGHT) {
+            var scalingFactor = questConstants.MAX_WALL_HEIGHT / wallHeight;
+            var localWidth = questConstants.QUEST_IMG_WIDTH * scalingFactor;
+
+            if (localWidth < newWidth) {
+                newWidth = localWidth;
+            }
+        }
+
+        $('#table-wrapper img').attr('width', newWidth + 'px');
+    },
+    calculateQuestWallHeight: function (height) {
+        var totalHeight = questConstants.QUEST_BORDER_IMG_HEIGHT_TOP +
+            questConstants.QUEST_BORDER_IMG_HEIGHT_BOTTOM;
+        if (height == 1) {
+            return totalHeight + questConstants.QUEST_BASE_IMG_HEIGHT;
+        }
+
+        totalHeight = totalHeight
+            + (height * questConstants.QUEST_BASE_IMG_HEIGHT)
+            + ((height - 1) * questConstants.QUEST_ASSEMBLY_IMG_HEIGHT);
+
+        return totalHeight;
+    }
 }
 
 $(document).ready(function () {
