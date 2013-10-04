@@ -36,11 +36,13 @@ questCalculator = {
         var width = parseInt($('input[name="widthInput"]').val());
         var height = parseInt($('input[name="heightInput"]').val());
 
-        questOptions.current.generateWall(height, width);
+        var dimensions = questOptions.current.generateWall(height, width);
 
-        this.adjustWallDimensions(height, width);
+        this.adjustWallDimensions(dimensions);
     },
-    adjustWallDimensions: function (height, width) {
+    adjustWallDimensions: function (dimensions) {
+        var width = dimensions.width;
+        var height = dimensions.height;
         var totalWidth = width * questConstants.QUEST_IMG_WIDTH;
         var newWidth = questConstants.QUEST_IMG_WIDTH;
 
