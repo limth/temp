@@ -19,8 +19,8 @@ questOptions = {
             var rows = dimensions.rows;
             var columns = dimensions.columns;
 
-            if (width >= questConstants.QUEST_WIDTH &&
-                    height >= questConstants.QUEST_HEIGHT) {
+            if (width >= (parseInt(questConstants.QUEST_WIDTH / 10)) &&
+                    height >= (parseInt(questConstants.QUEST_HEIGHT)) / 10) {
                 $('#table-wrapper').append(generateQuestTable(rows, columns));
                 $('#summary').remove();
                 $('#calc-render').append(this.generateWallSummary(width, height, rows, columns));
@@ -36,23 +36,23 @@ questOptions = {
             var summaryText = '<span>Podsumowanie:' 
                 + '<br/>Liczba wykorzystanych Questów: ' + rows * columns
                 + ' - ' + columns + ' w poziomie, ' + rows + ' w pionie.'
-                + '<br/>Szerokość ściany Questów: ' + columns * questConstants.QUEST_WIDTH + 'cm' 
-                + ' - pozostało ' + (width - (columns * questConstants.QUEST_WIDTH)) + 'cm'
-                + '<br/>Wysokość ściany Questów: ' + rows * questConstants.QUEST_HEIGHT + 'cm'
-                + ' - pozostało ' + (height - (rows * questConstants.QUEST_HEIGHT)) + 'cm'
+                + '<br/>Szerokość ściany Questów: ' + (columns * questConstants.QUEST_WIDTH / 10) + 'cm' 
+                + ' - pozostało ' + (((width * 10) - (columns * questConstants.QUEST_WIDTH)) / 10) + 'cm'
+                + '<br/>Wysokość ściany Questów: ' + (rows * questConstants.QUEST_HEIGHT / 10) + 'cm'
+                + ' - pozostało ' + (((height * 10) - (rows * questConstants.QUEST_HEIGHT)) / 10) + 'cm'
                 + '</span>';
 
             return $summary.append(summaryText);
         },
         calculateDimensions: function (width, height) {
-            var rows = parseInt(height / questConstants.QUEST_HEIGHT);
-            var columns = parseInt(width / questConstants.QUEST_WIDTH);
+            var rows = parseInt(height * 10 / questConstants.QUEST_HEIGHT);
+            var columns = parseInt(width * 10 / questConstants.QUEST_WIDTH);
 
             return { rows: rows, columns: columns };
         },
         measurementsError: function () {
             var $summary = $('<div>').attr('id', 'summary');
-            var errorText = 'Proszę podać szerokość >= 80cm, wysokość >= 124cm.';
+            var errorText = 'Proszę podać szerokość >= 8cm, wysokość >= 13cm.';
             
             return errorText;
         }
@@ -70,7 +70,7 @@ questOptions = {
             $('#summary').remove();
             $('#calc-render').append(this.generateWallSummary(columns, rows));
 
-            return { width: columns, height: rows };
+            return { width: rows, height: columns };
         },
         generateWallSummary: function (width, height) {
             var $summary = $('<div>').attr('id', 'summary');
