@@ -76,8 +76,8 @@ questOptions = {
             var $summary = $('<div>').attr('id', 'summary');
             var summaryText = '<span>Podsumowanie:' 
                 + '<br/>Liczba wykorzystanych Questów: ' + width * height
-                + '<br/>Szerokość ściany: ' + width * questConstants.QUEST_WIDTH + 'cm' 
-                + '<br/>Wysokość ściany: ' + height * questConstants.QUEST_HEIGHT + 'cm'
+                + '<br/>Szerokość ściany: ' + width * questConstants.QUEST_WIDTH / 10 + 'cm' 
+                + '<br/>Wysokość ściany: ' + height * questConstants.QUEST_HEIGHT / 10 + 'cm'
                 + '</span>';
 
             return $summary.append(summaryText);
