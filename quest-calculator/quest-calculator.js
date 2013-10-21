@@ -1,6 +1,8 @@
 questCalculator = {
     initialize: function () {
         $('input[name="calc-option"]').first().prop('checked', true);
+        $('#calc-option-label-1').text('Dopasowanie Questów do ściany.');
+        $('#calc-option-label-2').text('Zbudowanie ściany z Questów.');
         this.initializeOptions();
     },
     initializeOptions: function () {
