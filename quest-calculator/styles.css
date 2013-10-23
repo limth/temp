@@ -39,3 +39,12 @@ td, tr {
 #summary {
     text-align: left;
 }
+
+#calc-render span, #calc-choice span {
+    font-size: 15px;
+    line-height: 19px;
+    text-shadow: 1px 1px #CCCCCC;
+    vertical-align: baseline;
+    color: #404040;
+    font-family: Tahoma;
+}
