@@ -59,9 +59,9 @@ questOptions = {
     },
     2: {
         renderOption: function () {
-            return '<span>Ściana Questów: liczba kolumn </span>'
+            return '<span>Ściana Questów: ilość w pionie </span>'
                 + '<input type="text" name="widthInput" />'
-                + '<span> x liczba rzędów </span>'
+                + '<span> x ilość w poziomie </span>'
                 + '<input type="text" name="heightInput" />&nbsp;'
                 + '<input type="button" name="generateButton" value="Generuj" />';
         },
