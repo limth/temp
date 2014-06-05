@@ -36,6 +36,16 @@ td, tr {
     margin-top: 20px;
 }
 
+#table-wrapper img {
+    max-width: 100%;
+    height: auto;
+    width: 100%;
+}
+
+#calc-render * {
+    vertical-align: top;
+}
+
 #summary {
     text-align: left;
 }
@@ -44,7 +54,6 @@ td, tr {
     font-size: 15px;
     line-height: 19px;
     text-shadow: 1px 1px #CCCCCC;
-    vertical-align: baseline;
     color: #404040;
     font-family: Tahoma;
 }

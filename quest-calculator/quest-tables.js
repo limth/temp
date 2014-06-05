@@ -5,6 +5,12 @@ Number.prototype.times = function(fn) {
 }
 
 function generateQuestTable(numRows, numCols) {
+    if(numRows * numCols <= 400) {
+        questImages.setHqImageSet();
+    } else {
+        questImages.setCompressedImageSet();
+    }
+
     var topRow = generateTopRow(numCols);
     var assembledRows = generateAssembledRows(numRows, numCols);
     var baseRow = generateBaseRow(numCols);
@@ -34,7 +40,7 @@ function generateAssembledRows(numRows, numCols) {
 
 function generateTopRow(numCols) {
     var topRow = $('<tr/>').append(numCols.times(function(c) {
-        return $('<td/>').append(getTopQuestImage());
+        return $('<td/>').append(questImages.topImage);
     }));
 
     return topRow;
@@ -42,7 +48,7 @@ function generateTopRow(numCols) {
 
 function generateBaseRow(numCols) {
     var baseRow = $('<tr/>').append(numCols.times(function(c) {
-        return $('<td/>').append(getBaseQuestImage());
+        return $('<td/>').append(questImages.baseImage);
     }));
 
     return baseRow;
@@ -50,7 +56,7 @@ function generateBaseRow(numCols) {
 
 function generateAssemblyRow(numCols) {
     var assemblyRow = $('<tr/>').append(numCols.times(function(c) {
-        return $('<td/>').append(getAssemblyQuestImage());
+        return $('<td/>').append(questImages.assemblyImage);
     }));
 
     return assemblyRow;
@@ -58,7 +64,7 @@ function generateAssemblyRow(numCols) {
 
 function generateBottomRow(numCols) {
     var bottomRow = $('<tr/>').append(numCols.times(function(c) {
-        return $('<td/>').append(getBottomQuestImage());
+        return $('<td/>').append(questImages.bottomImage);
     }));
     
     return bottomRow;

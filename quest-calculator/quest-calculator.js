@@ -1,8 +1,8 @@
 questCalculator = {
     initialize: function () {
         $('input[name="calc-option"]').first().prop('checked', true);
-        $('#calc-option-label-1').text('Dopasowanie Questów do ściany.');
-        $('#calc-option-label-2').text('Zbudowanie ściany z Questów.');
+        //$('#calc-option-label-1').text('Dopasowanie Questów do ściany.');
+        //$('#calc-option-label-2').text('Zbudowanie ściany z Questów.');
         this.initializeOptions();
     },
     initializeOptions: function () {
@@ -22,6 +22,7 @@ questCalculator = {
             $('#table-wrapper').empty();
             $('#summary').empty();
             questCalculator.generateWall(); 
+            //alert($('#table-wrapper table').height());
         });
     },
     renderInputWrapper: function () {
@@ -53,8 +54,9 @@ questCalculator = {
         }
 
         var wallHeight = this.calculateQuestWallHeight(height);
-        if (wallHeight > questConstants.MAX_WALL_HEIGHT) {
-            var scalingFactor = questConstants.MAX_WALL_HEIGHT / wallHeight;
+        var maxWallHeight = questConstants.MAX_WALL_HEIGHT; 
+        if (wallHeight > maxWallHeight) {
+            var scalingFactor = maxWallHeight / wallHeight;
             var localWidth = questConstants.QUEST_IMG_WIDTH * scalingFactor;
 
             if (localWidth < newWidth) {
@@ -62,7 +64,7 @@ questCalculator = {
             }
         }
 
-        $('#table-wrapper img').attr('width', newWidth + 'px');
+        $('#table-wrapper td').attr('width', newWidth + 'px');
     },
     calculateQuestWallHeight: function (height) {
         var totalHeight = questConstants.QUEST_BORDER_IMG_HEIGHT_TOP +

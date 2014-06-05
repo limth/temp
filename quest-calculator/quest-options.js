@@ -7,7 +7,7 @@ questOptions = {
     current: this[this.selectedOption],
     1: {
         renderOption: function () {
-            return '<span>Rozmiar ściany: szerokość </span>'
+            return '<span>Regał Questsystem: szerokość </span>'
                 + '<input type="text" name="widthInput" />'
                 + '<span>[cm] x wysokość </span>'
                 + '<input type="text" name="heightInput" />'
@@ -15,7 +15,7 @@ questOptions = {
                 + '<input type="button" name="generateButton" value="Generuj" />';
         },   
         generateWall: function (height, width) {
-            var dimensions = this.calculateDimensions(width, height);
+            var dimensions = this._calculateDimensions(width, height);
             var rows = dimensions.rows;
             var columns = dimensions.columns;
 
@@ -44,7 +44,7 @@ questOptions = {
 
             return $summary.append(summaryText);
         },
-        calculateDimensions: function (width, height) {
+        _calculateDimensions: function (width, height) {
             var rows = parseInt(height * 10 / questConstants.QUEST_HEIGHT);
             var columns = parseInt(width * 10 / questConstants.QUEST_WIDTH);
 
@@ -59,9 +59,9 @@ questOptions = {
     },
     2: {
         renderOption: function () {
-            return '<span>Ściana Questów: ilość w pionie </span>'
+            return '<span>Ściana Questów: ilość w poziomie </span>'
                 + '<input type="text" name="widthInput" />'
-                + '<span> x ilość w poziomie </span>'
+                + '<span> x ilość w pionie </span>'
                 + '<input type="text" name="heightInput" />&nbsp;'
                 + '<input type="button" name="generateButton" value="Generuj" />';
         },
@@ -70,17 +70,27 @@ questOptions = {
             $('#summary').remove();
             $('#calc-render').append(this.generateWallSummary(columns, rows));
 
-            return { width: rows, height: columns };
+            return { width: columns, height: rows };
         },
         generateWallSummary: function (width, height) {
+            var dimensions = this._calculateDimensions(width, height);
             var $summary = $('<div>').attr('id', 'summary');
             var summaryText = '<span>Podsumowanie:' 
                 + '<br/>Liczba wykorzystanych Questów: ' + width * height
-                + '<br/>Szerokość ściany: ' + width * questConstants.QUEST_WIDTH / 10 + 'cm' 
-                + '<br/>Wysokość ściany: ' + height * questConstants.QUEST_HEIGHT / 10 + 'cm'
+                + '<br/>Szerokość ściany: ' + dimensions.totalWidth + 'cm' 
+                + '<br/>Wysokość ściany: ' + dimensions.totalHeight + 'cm'
                 + '</span>';
 
             return $summary.append(summaryText);
+        },
+        _calculateDimensions: function (widthCount, heightCount) {
+            var width = widthCount * questConstants.QUEST_WIDTH / 10;
+            var height = (heightCount - 1)
+                * questConstants.QUEST_HEIGHT_rest
+                + questConstants.QUEST_HEIGHT_1st;
+            height = height / 10;
+
+            return { totalWidth: width, totalHeight: height };
         }
     }
 }
