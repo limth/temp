@@ -5,7 +5,26 @@ Number.prototype.times = function(fn) {
 }
 
 function generateQuestTable(numRows, numCols) {
-    if(numRows * numCols <= 400) {
+    var $exceptionDiv = $('<div/>');
+    if (questOptions.selectedOption == 1) {
+        if (numRows > 51)
+            return $exceptionDiv.text('Wysokość nie może przekraczać 600cm.');
+
+        if (numCols > 50)
+            return $exceptionDiv.text('Szerokość nie może przekraczać 400cm.');
+
+    } else if (questOptions.selectedOption == 2) {
+        if (numRows > 200)
+            return $exceptionDiv.text('Ilość w pionie nie może przekraczać 200.');
+
+        if (numCols > 200)
+            return $exceptionDiv.text('Ilość w poziomie nie może przekraczać 200.');
+
+        if (numRows * numCols > 2500)
+            return $exceptionDiv.text('Suma questów nie może przekraczać 2500.');
+    }
+
+    if (numRows * numCols <= 400) {
         questImages.setHqImageSet();
     } else {
         questImages.setCompressedImageSet();
