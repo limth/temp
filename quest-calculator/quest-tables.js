@@ -6,6 +6,8 @@ Number.prototype.times = function(fn) {
 
 function generateQuestTable(numRows, numCols) {
     var $exceptionDiv = $('<div/>');
+    $exceptionDiv.css('height', '100px');
+    $exceptionDiv.attr('id', 'invalid-measurements');
     if (questOptions.selectedOption == 1) {
         if (numRows > 51)
             return $exceptionDiv.text('Wysokość nie może przekraczać 600cm.');

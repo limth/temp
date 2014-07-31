@@ -52,8 +52,21 @@ td, tr {
 
 #calc-render span, #calc-choice span {
     font-size: 15px;
+
     line-height: 19px;
     text-shadow: 1px 1px #CCCCCC;
     color: #404040;
+    font-family: Tahoma;
+}
+
+#imPage div {
+    height: auto !important;
+}
+
+#invalid-measurements {
+    font-size: 15px;
+    line-height: 19px;
+    text-shadow: 1px 1px #CCCCCC;
+    color: black;
     font-family: Tahoma;
 }

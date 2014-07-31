@@ -42,6 +42,16 @@ questCalculator = {
         var dimensions = questOptions.current.generateWall(height, width);
 
         this.adjustWallDimensions(dimensions);
+        
+        $(window).load(function () { alert(); });
+        var $calcChoiceDiv = $('#calc-choice');
+        var targetContentHeight = '750px';
+        if (parseInt($calcChoiceDiv.css('height')) > 700) {
+            targetContentHeight = parseInt($calcChoiceDiv.css('height')) + 100 + 'px'; 
+        }
+
+        //stretching window to fit quest-calculator
+        $('#imPage').css('height', targetContentHeight);
     },
     adjustWallDimensions: function (dimensions) {
         var width = dimensions.width;
@@ -82,5 +92,6 @@ questCalculator = {
 }
 
 $(document).ready(function () {
+    questImages.preloadImages();
     questCalculator.initialize();
 });
