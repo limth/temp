@@ -43,6 +43,7 @@ questCalculator = {
 
         this.adjustWallDimensions(dimensions);
         
+        //wait for all images to load
         $(window).load(function () { alert(); });
         var $calcChoiceDiv = $('#calc-choice');
         var targetContentHeight = '750px';
