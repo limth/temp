@@ -39,6 +39,11 @@ questCalculator = {
         var width = parseInt($('input[name="widthInput"]').val());
         var height = parseInt($('input[name="heightInput"]').val());
 
+        //10000 value input cap.
+        if (!this._areInputsValid(width, height)) {
+            return;
+        }
+
         var dimensions = questOptions.current.generateWall(height, width);
 
         this.adjustWallDimensions(dimensions);
@@ -89,6 +94,18 @@ questCalculator = {
             + ((height - 1) * questConstants.QUEST_ASSEMBLY_IMG_HEIGHT);
 
         return totalHeight;
+    },
+    _areInputsValid: function (val1, val2) {
+        var x = parseInt(val1);
+        var y = parseInt(val2);
+
+        if (x > 10000 || y > 10000) {
+            alert('Maksymalna wartość dla pola to 10000');
+
+            return false;
+        }
+
+        return true;
     }
 }
 

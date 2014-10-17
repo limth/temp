@@ -42,8 +42,8 @@ questOptions = {
                 + ' - ' + columns + ' w poziomie, ' + rows + ' w pionie.'
                 + '<br/>Szerokość ściany Questów: ' + (columns * questConstants.QUEST_WIDTH / 10) + 'cm' 
                 + ' - pozostało ' + (((width * 10) - (columns * questConstants.QUEST_WIDTH)) / 10) + 'cm'
-                + '<br/>Wysokość ściany Questów: ' + actualHeight + 'cm'
-                + ' - pozostało ' + remainingHeight + 'cm'
+                + '<br/>Wysokość ściany Questów: ' + actualHeight.toFixed(2) + 'cm'
+                + ' - pozostało ' + remainingHeight.toFixed(2) + 'cm'
                 + '</span>';
 
             return $summary.append(summaryText);
