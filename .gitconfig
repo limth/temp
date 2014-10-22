@@ -1,0 +1,15 @@
+[user]
+	name = limth
+    email = radomir.szewczyk@gmail.com
+[alias]
+	ci = commit -v -m
+    ps = push
+    pl = pull
+    co = checkout 
+    sta = stash
+    br = branch
+	st = status
+    wc = whatchanged
+    new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
+    sdiff = !sh -c 'git diff --no-prefix --ignore-space-at-eol HEAD~1 HEAD | sed -e \"s/^diff --git [^[:space:]]*/Index:/\" -e \"s/^index.*/===================================================================/\" -e \"s/@@\\(.*\\)@@.*/@@\\1@@/g\" > C:/patch.diff'
+    fpa = !sh -c 'cygpath -w -a $0'
