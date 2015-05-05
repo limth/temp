@@ -27,9 +27,9 @@ function generateQuestTable(numRows, numCols) {
     }
 
     if (numRows * numCols <= 400) {
-        questImages.setHqImageSet();
+        questImages[questOptions.selectedType].setHqImageSet();
     } else {
-        questImages.setCompressedImageSet();
+        questImages[questOptions.selectedType].setCompressedImageSet();
     }
 
     var topRow = generateTopRow(numCols);

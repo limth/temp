@@ -1,8 +1,16 @@
 questOptions = {
+    selectedType: questTypes.q4,
     selectedOption: 1,
     setOption: function (option) {
         this.selectedOption = parseInt(option);
         this.current = this[this.selectedOption];
+    },
+    setType: function (type) {
+        this.selectedType = type;
+        
+        $('#table-wrapper').empty();
+        $('#summary').empty();
+        questCalculator.generateWall();
     },
     current: this[this.selectedOption],
     1: {
@@ -20,8 +28,8 @@ questOptions = {
             var columns = dimensions.columns;
 
             //wall generation condition 
-            if (width >= (parseInt(questConstants.QUEST_WIDTH / 10)) &&
-                    height >= (parseInt(questConstants.QUEST_HEIGHT_1st)) / 10) {
+            if (width >= (parseInt(questConstants[questOptions.selectedType].QUEST_WIDTH / 10)) &&
+                    height >= (parseInt(questConstants[questOptions.selectedType].QUEST_HEIGHT_1st)) / 10) {
                 $('#table-wrapper').append(generateQuestTable(rows, columns));
                 $('#summary').remove();
                 $('#calc-render').append(this.generateWallSummary(width, height, rows, columns));
@@ -35,13 +43,13 @@ questOptions = {
         generateWallSummary: function (width, height, rows, columns) {
             var $summary = $('<div>').attr('id', 'summary');
             var questTotalCount = rows * columns;
-            var actualHeight = ((rows - 1) * questConstants.QUEST_HEIGHT_rest / 10) + (questConstants.QUEST_HEIGHT_1st / 10);
-            var remainingHeight = height - ((rows - 1) * questConstants.QUEST_HEIGHT_rest / 10) - (questConstants.QUEST_HEIGHT_1st / 10);
+            var actualHeight = ((rows - 1) * questConstants[questOptions.selectedType].QUEST_HEIGHT_rest / 10) + (questConstants[questOptions.selectedType].QUEST_HEIGHT_1st / 10);
+            var remainingHeight = height - ((rows - 1) * questConstants[questOptions.selectedType].QUEST_HEIGHT_rest / 10) - (questConstants[questOptions.selectedType].QUEST_HEIGHT_1st / 10);
             var summaryText = '<span>Podsumowanie:' 
                 + '<br/>Liczba wykorzystanych Questów: ' + questTotalCount
                 + ' - ' + columns + ' w poziomie, ' + rows + ' w pionie.'
-                + '<br/>Szerokość ściany Questów: ' + (columns * questConstants.QUEST_WIDTH / 10) + 'cm' 
-                + ' - pozostało ' + (((width * 10) - (columns * questConstants.QUEST_WIDTH)) / 10) + 'cm'
+                + '<br/>Szerokość ściany Questów: ' + (columns * questConstants[questOptions.selectedType].QUEST_WIDTH / 10) + 'cm' 
+                + ' - pozostało ' + (((width * 10) - (columns * questConstants[questOptions.selectedType].QUEST_WIDTH)) / 10) + 'cm'
                 + '<br/>Wysokość ściany Questów: ' + actualHeight.toFixed(2) + 'cm'
                 + ' - pozostało ' + remainingHeight.toFixed(2) + 'cm'
                 + '</span>';
@@ -51,16 +59,15 @@ questOptions = {
         _calculateDimensions: function (width, height) {
             //1st quest height
             height = height - 12.4;
-            var rows = parseInt(height * 10 / questConstants.QUEST_HEIGHT_rest) + 1;
-            var columns = parseInt(width * 10 / questConstants.QUEST_WIDTH);
+            var rows = parseInt(height * 10 / questConstants[questOptions.selectedType].QUEST_HEIGHT_rest) + 1;
+            var columns = parseInt(width * 10 / questConstants[questOptions.selectedType].QUEST_WIDTH);
 
             return { rows: rows, columns: columns };
         },
         measurementsError: function () {
             var $summary = $('<div>').attr('id', 'summary');
-            var errorText = 'Proszę podać szerokość większą od 8cm, wysokość większą od 13cm.';
             
-            return errorText;
+            return questConstants[questOptions.selectedType].OPTION_1_ERROR_TEXT;
         }
     },
     2: {
@@ -90,17 +97,13 @@ questOptions = {
             return $summary.append(summaryText);
         },
         _calculateDimensions: function (widthCount, heightCount) {
-            var width = widthCount * questConstants.QUEST_WIDTH / 10;
+            var width = widthCount * questConstants[questOptions.selectedType].QUEST_WIDTH / 10;
             var height = (heightCount - 1)
-                * questConstants.QUEST_HEIGHT_rest
-                + questConstants.QUEST_HEIGHT_1st;
+                * questConstants[questOptions.selectedType].QUEST_HEIGHT_rest
+                + questConstants[questOptions.selectedType].QUEST_HEIGHT_1st;
             height = height / 10;
 
             return { totalWidth: width, totalHeight: height };
         }
     }
 }
-
-$(document).ready(function () {
-    questCalculator.initialize();
-});

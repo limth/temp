@@ -3,7 +3,18 @@ questCalculator = {
         $('input[name="calc-option"]').first().prop('checked', true);
         //$('#calc-option-label-1').text('Dopasowanie Questów do ściany.');
         //$('#calc-option-label-2').text('Zbudowanie ściany z Questów.');
+        this.initializeTypePicker();
         this.initializeOptions();
+    },
+    initializeTypePicker: function () {
+        $('#imFGItem_0_1').attr('onclick','').unbind('click');
+        $('#imFGItem_0_5').attr('onclick','').unbind('click');
+        $('#imFGItem_0_1').click(function () {
+           questOptions.setType('Q2'); 
+        });
+        $('#imFGItem_0_5').click(function () {
+           questOptions.setType('Q4'); 
+        });
     },
     initializeOptions: function () {
         questOptions.setOption($('input[name="calc-option"][checked]').val());
@@ -62,8 +73,8 @@ questCalculator = {
     adjustWallDimensions: function (dimensions) {
         var width = dimensions.width;
         var height = dimensions.height;
-        var totalWidth = width * questConstants.QUEST_IMG_WIDTH;
-        var newWidth = questConstants.QUEST_IMG_WIDTH;
+        var totalWidth = width * questConstants[questOptions.selectedType].QUEST_IMG_WIDTH;
+        var newWidth = questConstants[questOptions.selectedType].QUEST_IMG_WIDTH;
 
         if (totalWidth > questConstants.MAX_WALL_WIDTH) {
             newWidth = questConstants.MAX_WALL_WIDTH / width;
@@ -73,7 +84,7 @@ questCalculator = {
         var maxWallHeight = questConstants.MAX_WALL_HEIGHT; 
         if (wallHeight > maxWallHeight) {
             var scalingFactor = maxWallHeight / wallHeight;
-            var localWidth = questConstants.QUEST_IMG_WIDTH * scalingFactor;
+            var localWidth = questConstants[questOptions.selectedType].QUEST_IMG_WIDTH * scalingFactor;
 
             if (localWidth < newWidth) {
                 newWidth = localWidth;
@@ -83,15 +94,15 @@ questCalculator = {
         $('#table-wrapper td').attr('width', newWidth + 'px');
     },
     calculateQuestWallHeight: function (height) {
-        var totalHeight = questConstants.QUEST_BORDER_IMG_HEIGHT_TOP +
-            questConstants.QUEST_BORDER_IMG_HEIGHT_BOTTOM;
+        var totalHeight = questConstants[questOptions.selectedType].QUEST_BORDER_IMG_HEIGHT_TOP +
+            questConstants[questOptions.selectedType].QUEST_BORDER_IMG_HEIGHT_BOTTOM;
         if (height == 1) {
-            return totalHeight + questConstants.QUEST_BASE_IMG_HEIGHT;
+            return totalHeight + questConstants[questOptions.selectedType].QUEST_BASE_IMG_HEIGHT;
         }
 
         totalHeight = totalHeight
-            + (height * questConstants.QUEST_BASE_IMG_HEIGHT)
-            + ((height - 1) * questConstants.QUEST_ASSEMBLY_IMG_HEIGHT);
+            + (height * questConstants[questOptions.selectedType].QUEST_BASE_IMG_HEIGHT)
+            + ((height - 1) * questConstants[questOptions.selectedType].QUEST_ASSEMBLY_IMG_HEIGHT);
 
         return totalHeight;
     },
@@ -110,6 +121,7 @@ questCalculator = {
 }
 
 $(document).ready(function () {
+    questCalculator.initializeTypePicker();
     questImages.preloadImages();
     questCalculator.initialize();
 });
