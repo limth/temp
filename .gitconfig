@@ -1,15 +1,21 @@
 [user]
-	name = limth
+    name = limth
     email = radomir.szewczyk@gmail.com
 [alias]
-	ci = commit -v -m
+    ci = commit -v -m
     ps = push
     pl = pull
     co = checkout 
     sta = stash
     br = branch
-	st = status
+    st = status
     wc = whatchanged
-    new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
-    sdiff = !sh -c 'git diff --no-prefix --ignore-space-at-eol HEAD~1 HEAD | sed -e \"s/^diff --git [^[:space:]]*/Index:/\" -e \"s/^index.*/===================================================================/\" -e \"s/@@\\(.*\\)@@.*/@@\\1@@/g\" > C:/patch.diff'
+    lo = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cgreen\\ [%cn]" --decorate --date=relative -30
+    lof = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cgreen\\ [%cn]"  --decorate --date=relative  
+    ead = !sh -c 'git lof origin/develop..HEAD'
+    new = !sh -c 'git lof $1@{1}..$1@{0}"$@"'
+    svndiff = !sh -c 'git diff --no-prefix --ignore-space-at-eol HEAD~1 HEAD | sed -e \"s/^diff --git [^[:space:]]*/Index:/\" -e \"s/^index.*/===================================================================/\" -e \"s/@@\\(.*\\)@@.*/@@\\1@@/g\" > C:/patch.diff'
     fpa = !sh -c 'cygpath -w -a $0'
+    diffr = diff HEAD~1 HEAD
+
+    loga = !sh -c 'git lof --author=$0'
